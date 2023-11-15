@@ -95,14 +95,14 @@ cart.forEach((cartItem) => {
     `;
 });
 
-document.querySelector('js-order-summary').innerHTML = cartSummaryHTML;
+document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
 document.querySelectorAll('.js-delete-link').forEach( (link) => {
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId;
         removeFromCart(productId);
 
-        document.querySelector(
+        const container = document.querySelector(
             `.js-cart-item-container-${productId}`
         );
         container.remove();
