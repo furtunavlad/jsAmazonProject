@@ -15,7 +15,8 @@ function saveToStorage(){
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addToCart(productId){
+// add to cart a product in a certain quantity
+export function addToCart(productId, quantity){
     let matchingItem;
 
     cart.forEach((cartItem) => {
@@ -24,12 +25,16 @@ export function addToCart(productId){
         }
     });
 
+    // if already in the cart, increase the existing quantity with the selected (new) quantity
     if(matchingItem){
-        matchingItem.quantity += 1;
+        matchingItem.quantity += quantity;
     } else {
+        // otherwise, if the product is not in the cart, create a new instance
+        // with the selected quantity
+        // and the default delivery option '1'
         cart.push({
             productId: productId,
-            quantity: 1,
+            quantity: quantity,
             deliveryOptionId: '1'
         });
     }
