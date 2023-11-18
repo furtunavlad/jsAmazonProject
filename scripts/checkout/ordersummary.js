@@ -7,8 +7,11 @@ import { renderPaymentSummary } from "./paymentsummary.js";
 
 export function renderOrderSummary(){
     let cartSummaryHTML = '';
+    let cartItemQuantity = 0;
         
     cart.forEach((cartItem) => {
+        cartItemQuantity += cartItem.quantity;
+
         const productId = cartItem.productId;
 
         const matchingProduct = getProduct(productId);
@@ -105,6 +108,8 @@ export function renderOrderSummary(){
 
     document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
+    document.querySelector('.js-checkout-header').innerHTML = localStorage.getItem("cartQuantity") + ' ' + 'items';
+
     document.querySelectorAll('.js-delete-link').forEach( (link) => {
         link.addEventListener('click', ()=>{
             const productId = link.dataset.productId;
@@ -115,6 +120,7 @@ export function renderOrderSummary(){
             );
             container.remove();
 
+            renderOrderSummary();
             renderPaymentSummary();
         });
     });

@@ -44,12 +44,17 @@ export function addToCart(productId){
 
 export function removeFromCart(productId){
     const newCart = [];
+    let thisProductQuantity;
 
     cart.forEach((cartItem) => {
         if(cartItem.productId !== productId){
             newCart.push(cartItem);
+        } else if (cartItem.productId == productId){
+            thisProductQuantity = cartItem.quantity;
         }
     });
+
+    localStorage.setItem("cartQuantity", localStorage.getItem("cartQuantity") - thisProductQuantity);
 
     cart = newCart;
 
