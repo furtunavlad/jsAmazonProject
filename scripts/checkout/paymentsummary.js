@@ -2,6 +2,7 @@ import { cart, setCart } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
+import { pushCartToOrder } from "../orders/ordersModules.js";
 
 export function renderPaymentSummary(){
     let productPriceCents = 0;
@@ -72,8 +73,12 @@ export function renderPaymentSummary(){
     // when "place your order" button is clicked
     placeOrderBtn.addEventListener('click', () => {
         if(cart.length != 0){
+            // push the current cart to the orders page
+            pushCartToOrder(cart);
+
             // redirect to "orders.html"
             window.location.href = "orders.html";
+
             // globally empty cart to [] using a function imported from cart.js
             setCart([]);
     

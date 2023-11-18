@@ -1,5 +1,9 @@
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
+function saveToStorage(){
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
 if(!cart){
     cart = [];
     localStorage.setItem("cartQuantity", 0);
@@ -9,10 +13,6 @@ export function setCart(newCart) {
     cart = newCart;
 
     saveToStorage();
-}
-
-function saveToStorage(){
-    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // add to cart a product in a certain quantity
