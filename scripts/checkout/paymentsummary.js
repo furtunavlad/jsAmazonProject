@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart, setCart } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
@@ -59,10 +59,28 @@ export function renderPaymentSummary(){
         </div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <button class="place-order-button button-primary js-place-order-btn">
         Place your order
     </button>
     `;
-
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
+
+    // if "place order btn" is pressed the orders should be sent
+    // and we should be redirected to orders page, while clearing the cart
+    const placeOrderBtn = document.querySelector('.js-place-order-btn');
+
+    // when "place your order" button is clicked
+    placeOrderBtn.addEventListener('click', () => {
+        if(cart.length != 0){
+            // redirect to "orders.html"
+            window.location.href = "orders.html";
+            // globally empty cart to [] using a function imported from cart.js
+            setCart([]);
+    
+            // reset the localstorage item "cartQuantity" to 0
+            localStorage.setItem("cartQuantity", 0);
+        }
+    });
+
+
 }
