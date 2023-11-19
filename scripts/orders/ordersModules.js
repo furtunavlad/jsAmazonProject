@@ -1,5 +1,9 @@
 // array that holds all of the orders
-export let orders = [];
+let orders = JSON.parse(localStorage.getItem('orders'));
+
+if(!orders){
+    orders = [];
+}
 
 export function pushCartToOrder(cart){
     orders.push(cart);
