@@ -9,7 +9,8 @@ let orders = JSON.parse(localStorage.getItem('orders'));
 let orderContainerHTML = '';
 
 orders.forEach((order) => {
-    orderContainerHTML += `
+    let newOrderContainerHTML = '';
+    newOrderContainerHTML += `
         <div class="order-header">
             <div class="order-header-left-section">
                 <div class="order-date">
@@ -34,7 +35,7 @@ orders.forEach((order) => {
     order.products.forEach((product) =>{
         const matchingProduct = getProduct(product.productId);
         console.log(matchingProduct);
-        orderContainerHTML += `
+        newOrderContainerHTML += `
         <div class="product-image-container">
             <img src="${matchingProduct.image}">
         </div>
@@ -65,10 +66,11 @@ orders.forEach((order) => {
         `;
     });
 
-    orderContainerHTML += `
+    newOrderContainerHTML += `
         </div>
         <br>
     `;
+    orderContainerHTML = newOrderContainerHTML + orderContainerHTML;
 });
 
 document.querySelector('.js-order-container').innerHTML = orderContainerHTML;
