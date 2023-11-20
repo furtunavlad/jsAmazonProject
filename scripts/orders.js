@@ -1,4 +1,4 @@
-import { products } from "../data/products.js";
+import { getProduct } from "../data/products.js";
 
 console.log(JSON.parse(localStorage.getItem('orders')));
 
@@ -24,28 +24,30 @@ orders.forEach((order) => {
 
             <div class="order-header-right-section">
                 <div class="order-header-label">Order ID:</div>
-                <div>27cba69d-4c3d-4098-b42d-ac7fa62b7664</div>
+                <div>${order.orderId}</div>
             </div>
         </div>
 
         <div class="order-details-grid">
     `;
 
-    order.forEach((item) =>{
+    order.products.forEach((product) =>{
+        const matchingProduct = getProduct(product.productId);
+        console.log(matchingProduct);
         orderContainerHTML += `
         <div class="product-image-container">
-            <img src="images/products/athletic-cotton-socks-6-pairs.jpg">
+            <img src="${matchingProduct.image}">
         </div>
 
         <div class="product-details">
             <div class="product-name">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
+                ${matchingProduct.name}
             </div>
             <div class="product-delivery-date">
                 Arriving on: August 15
             </div>
             <div class="product-quantity">
-                Quantity: 1
+                Quantity: ${product.quantity}
             </div>
             <button class="buy-again-button button-primary">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">

@@ -69,7 +69,6 @@ export function renderPaymentSummary(){
     // if "place order btn" is pressed the orders should be sent
     // and we should be redirected to orders page, while clearing the cart
     const placeOrderBtn = document.querySelector('.js-place-order-btn');
-
     // when "place your order" button is clicked
     placeOrderBtn.addEventListener('click', () => {
         if(cart.length != 0){
