@@ -2,6 +2,8 @@ import { deliveryOptions, getDeliveryOption } from "../data/deliveryOptions.js";
 import { getFormattedDate } from "./orders/ordersModules.js";
 import { getProduct } from "../data/products.js";
 
+document.querySelector('.js-cart-quantity').innerHTML = localStorage.getItem('cartQuantity');
+
 const orders = JSON.parse(localStorage.getItem('orders'));
 var order;
 
