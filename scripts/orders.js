@@ -2,6 +2,7 @@ import { getProduct } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions, getDeliveryOption } from "../data/deliveryOptions.js";
 import { getFormattedDate } from "./orders/ordersModules.js";
+import { addToCart } from "../data/cart.js";
 
 console.log(JSON.parse(localStorage.getItem('orders')));
 
@@ -72,7 +73,7 @@ orders.forEach((order) => {
             <div class="product-quantity">
                 Quantity: ${product.quantity}
             </div>
-            <button class="buy-again-button button-primary">
+            <button class="buy-again-button button-primary js-buy-again" data-product-id="${product.productId}" data-product-quantity="${product.quantity}">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
                 <span class="buy-again-message">Buy it again</span>
             </button>
@@ -109,3 +110,17 @@ orders.forEach((order) => {
 
 document.querySelector('.js-order-container').innerHTML = orderContainerHTML;
 
+document.querySelectorAll('.js-buy-again').forEach( (button) => {
+    button.addEventListener('click', () =>{
+        // add to cart
+        const productId = button.dataset.productId;
+        const productQuantity = parseInt(button.dataset.productQuantity);
+        addToCart(productId, productQuantity);
+
+        // update the cart quantity globally
+        let newCartQuantity = parseInt(localStorage.getItem('cartQuantity'));
+        newCartQuantity += productQuantity;
+        localStorage.setItem('cartQuantity', newCartQuantity);
+        document.querySelector('.js-cart-quantity').innerHTML = newCartQuantity;
+    });
+});
