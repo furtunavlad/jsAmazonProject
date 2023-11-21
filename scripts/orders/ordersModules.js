@@ -9,6 +9,7 @@ if(!orders){
     orders = [];
 }
 
+// function to pass the current cart to orders page (when "place order" button is clicked)
 export function pushCartToOrder(cart){
     orders.push({
         orderId: generateOrderId(),
@@ -28,6 +29,29 @@ function generateOrderId() {
     const orderId = `${timestamp}-${randomNum}`;
   
     return orderId;
-}
+};
 
+// trivial method to use because of a dayjs bug where i cannot modify the localstring order date
+export function getFormattedDate(date, days){
+    const dateComponents = date.match(/(\w+) (\d+:\d+), (\w+) (\d+)/);
+    const dayOfWeek = dateComponents[1];
+    const time = dateComponents[2];
+    const month = dateComponents[3];
+    const dayOfMonth = dateComponents[4];
+    
+    // Create a new Date object
+    let deliveryDate = new Date(`${month} ${dayOfMonth}, ${new Date().getFullYear()} ${time}`);
+    
+    // Add 3 days
+    deliveryDate.setDate(deliveryDate.getDate() + days);
+    
+    // Format the date without time
+    const formattedDate = deliveryDate.toLocaleDateString(undefined, {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+    });
+    
+    return formattedDate;
+};
 

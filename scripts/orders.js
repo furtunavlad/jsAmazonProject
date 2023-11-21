@@ -1,6 +1,7 @@
 import { getProduct } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions, getDeliveryOption } from "../data/deliveryOptions.js";
+import { getFormattedDate } from "./orders/ordersModules.js";
 
 console.log(JSON.parse(localStorage.getItem('orders')));
 
@@ -43,6 +44,9 @@ orders.forEach((order) => {
         let deliveryOption = getDeliveryOption(product.deliveryOptionId);
         let deliveryOptionPrice = deliveryOption.priceCents;
 
+        // use the method to get the correct delivery date depending on the delivery option chosen
+        const deliveryDate = getFormattedDate(order.orderTimeSent, deliveryOption.deliveryDays);
+
         // for each product we get the product details (from the products array) using "getProduct" function
         const matchingProduct = getProduct(product.productId);
 
@@ -63,7 +67,7 @@ orders.forEach((order) => {
                 ${matchingProduct.name}
             </div>
             <div class="product-delivery-date">
-                Arriving on: August 15
+                Arriving on: ${deliveryDate}
             </div>
             <div class="product-quantity">
                 Quantity: ${product.quantity}
